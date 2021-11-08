@@ -4,6 +4,7 @@ import UpdateBlog from '../UpdateBlog/UpdateBlog';
 const Blogs = () => {
 
     const [blogs, setBlogs] = useState([]);
+    const [selectedBlog, setSelectedBlog] = useState(null);
 
     // display all blogs here
     useEffect(() => {
@@ -12,17 +13,10 @@ const Blogs = () => {
             .then(data => setBlogs(data))
     }, [])
 
-    const updateBlog = (id) => {
-        fetch(`https://care-box-backend.herokuapp.com/api/v1/applicant_test/update_blog/{id}/`, {
-            method: "PUT",
-        })
-            .then(res => res.json())
-            .then(data => console.log(data))
-    }
-
     const [modalIsOpen, setIsOpen] = useState(false);
 
-    function openModal() {
+    function openModal(blog) {
+        setSelectedBlog(blog);
         setIsOpen(true);
     }
 
@@ -46,21 +40,21 @@ const Blogs = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {blogs.map(blog => (
-                            <tr key={blog.id}>
+                        {blogs.map((blog, index) => (
+                            <tr key={index}>
                                 <td>{blog.Title} </td>
                                 <td>{blog.Author_Name}</td>
                                 <td>{blog.Phone}</td>
                                 <td>{blog.Email}</td>
                                 <td>{blog.Description}</td>
                                 <td>
-                                    <button onClick={openModal} className="btn btn-info">UPDATE</button>
+                                    <button onClick={() => openModal(blog)} className="btn btn-info">UPDATE</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                <UpdateBlog modalIsOpen={modalIsOpen} blogs={blogs} closeModal={closeModal}></UpdateBlog>
+                <UpdateBlog modalIsOpen={modalIsOpen} blogs={selectedBlog} closeModal={closeModal}></UpdateBlog>
             </div>
         </div>
     );
