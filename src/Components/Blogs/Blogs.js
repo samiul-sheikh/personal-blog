@@ -1,25 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import UpdateBlog from '../UpdateBlog/UpdateBlog';
+import React, { useState, useEffect } from "react";
+import UpdateBlog from "../UpdateBlog/UpdateBlog";
+import axios from "axios";
 
-const Blogs = () => {
+const Blogs = ({ blogs, fetchBlog }) => {
 
-    const [blogs, setBlogs] = useState([]);
     const [selectedBlog, setSelectedBlog] = useState(null);
 
-    // display all blogs here
-    useEffect(() => {
-        fetch('https://care-box-backend.herokuapp.com/api/v1/applicant_test/')
-            .then(res => res.json())
-            .then(data => setBlogs(data))
-    }, [])
-
+    //modal here
     const [modalIsOpen, setIsOpen] = useState(false);
-
     function openModal(blog) {
         setSelectedBlog(blog);
         setIsOpen(true);
     }
-
     function closeModal() {
         setIsOpen(false);
     }
@@ -48,13 +40,23 @@ const Blogs = () => {
                                 <td>{blog.Email}</td>
                                 <td>{blog.Description}</td>
                                 <td>
-                                    <button onClick={() => openModal(blog)} className="btn btn-info">UPDATE</button>
+                                    <button
+                                        onClick={() => openModal(blog)}
+                                        className="btn btn-info"
+                                    >
+                                        UPDATE
+                                    </button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                <UpdateBlog modalIsOpen={modalIsOpen} blogs={selectedBlog} closeModal={closeModal}></UpdateBlog>
+                <UpdateBlog
+                    modalIsOpen={modalIsOpen}
+                    blogs={selectedBlog}
+                    closeModal={closeModal}
+                    fetchBlog={fetchBlog}
+                ></UpdateBlog>
             </div>
         </div>
     );

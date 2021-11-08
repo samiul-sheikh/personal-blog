@@ -1,33 +1,33 @@
-import React, { useEffect } from 'react';
-import Modal from 'react-modal';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const customStyles = {
     content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
     },
 };
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
-const UpdateBlog = ({ modalIsOpen, blogs, closeModal }) => {
+const UpdateBlog = ({ modalIsOpen, blogs, closeModal, fetchBlog }) => {
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (!blogs) {
             closeModal();
         }
     }, []);
-    console.log(blogs);
 
     const { register, handleSubmit, errors } = useForm();
 
-    const onSubmit = (data) => {
-        console.log("data", data);
-        const URL = `https://care-box-backend.herokuapp.com/api/v1/applicant_test/update_blog/${blogs.id}`;
+    const onSubmit = async (data) => {
+        const URL = `/api/v1/applicant_test/update_blog/${blogs.id}`;
         const blogData = {
             id: blogs.id,
             Title: data.Title,
@@ -36,18 +36,21 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal }) => {
             Email: data.Email,
             Description: data.Description,
         };
-        fetch(URL, {
-            method: "PUT",
-            headers: {
-                "Custom-User-Agent": "gsdf#g3243F466$",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(blogData),
-        })
-            .then((res) => {
-                closeModal()
-            })
-            .catch((e) => console.log("update", e));
+        setLoading(true);
+        try {
+            const res = await axios.put(URL, blogData, {
+                headers: {
+                    "Custom-User-Agent": "gsdf#g3243F466$",
+                    "Content-Type": "application/json",
+                },
+            });
+            setLoading(false);
+            closeModal();
+            await fetchBlog();
+        } catch (e) {
+            setLoading(false);
+        }
+
     };
 
     return (
@@ -58,9 +61,13 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal }) => {
                 style={customStyles}
                 contentLabel="Example Modal"
             >
+                <div className="text-center">
+                    <button className="btn btn-info" onClick={closeModal}>close</button>
+                </div>
+
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group mb-3">
-                        <label htmlFor="exampleInputTitle" className="form-label">
+                        <label for="exampleInputTitle" className="form-label">
                             Blog Title
                         </label>
                         <input
@@ -76,7 +83,7 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label htmlFor="exampleInputAuthor" className="form-label">
+                        <label for="exampleInputAuthor" className="form-label">
                             Author Name
                         </label>
                         <input
@@ -92,7 +99,7 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label htmlFor="exampleInputPhone" className="form-label">
+                        <label for="exampleInputPhone" className="form-label">
                             Phone Number
                         </label>
                         <input
@@ -108,7 +115,7 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label htmlFor="exampleInputEmail" className="form-label">
+                        <label for="exampleInputEmail" className="form-label">
                             Email Address
                         </label>
                         <input
@@ -124,10 +131,11 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label htmlFor="exampleInputDescription" className="form-label">
+                        <label for="exampleInputDescription" className="form-label">
                             Blog Description
                         </label>
-                        <textarea rows="3"
+                        <input
+                            type="text"
                             defaultValue={blogs ? blogs.Description : ""}
                             ref={register({ required: true })}
                             name="Description"
@@ -139,8 +147,12 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal }) => {
                         )}
                     </div>
                     <div className="form-group d-grid mx-auto">
-                        <button type="submit" className="btn btn-primary">
-                            Submit
+                        <button
+                            type="submit"
+                            className="btn btn-primary"
+                            disabled={loading ? true : false}
+                        >
+                            {loading ? "Loading . . ." : "Submit"}
                         </button>
                     </div>
                 </form>
