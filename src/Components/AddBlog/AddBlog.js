@@ -38,7 +38,7 @@ const AddBlog = ({ fetchBlog }) => {
                 <h5 className="text-center">Add New Blog</h5>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group mb-3">
-                        <label for="exampleInputTitle" className="form-label">
+                        <label htmlFor="exampleInputTitle" className="form-label">
                             Blog Title
                         </label>
                         <input
@@ -53,7 +53,7 @@ const AddBlog = ({ fetchBlog }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label for="exampleInputAuthor" className="form-label">
+                        <label htmlFor="exampleInputAuthor" className="form-label">
                             Author Name
                         </label>
                         <input
@@ -68,7 +68,7 @@ const AddBlog = ({ fetchBlog }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label for="exampleInputPhone" className="form-label">
+                        <label htmlFor="exampleInputPhone" className="form-label">
                             Phone Number
                         </label>
                         <input
@@ -83,7 +83,7 @@ const AddBlog = ({ fetchBlog }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label for="exampleInputEmail" className="form-label">
+                        <label htmlFor="exampleInputEmail" className="form-label">
                             Email Address
                         </label>
                         <input
@@ -98,7 +98,7 @@ const AddBlog = ({ fetchBlog }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label for="exampleInputDescription" className="form-label">
+                        <label htmlFor="exampleInputDescription" className="form-label">
                             Blog Description
                         </label>
                         <textarea

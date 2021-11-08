@@ -67,11 +67,11 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal, fetchBlog }) => {
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group mb-3">
-                        <label for="exampleInputTitle" className="form-label">
+                        <label htmlFor="exampleInputTitle" className="form-label">
                             Blog Title
                         </label>
                         <input
-                            type="text"
+                            type="char"
                             defaultValue={blogs ? blogs.Title : ""}
                             ref={register({ required: true })}
                             name="Title"
@@ -83,11 +83,11 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal, fetchBlog }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label for="exampleInputAuthor" className="form-label">
+                        <label htmlFor="exampleInputAuthor" className="form-label">
                             Author Name
                         </label>
                         <input
-                            type="text"
+                            type="char"
                             defaultValue={blogs ? blogs.Author_Name : ""}
                             ref={register({ required: true })}
                             name="Author_Name"
@@ -99,11 +99,11 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal, fetchBlog }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label for="exampleInputPhone" className="form-label">
+                        <label htmlFor="exampleInputPhone" className="form-label">
                             Phone Number
                         </label>
                         <input
-                            type="text"
+                            type="char"
                             defaultValue={blogs ? blogs.Phone : ""}
                             ref={register({ required: true })}
                             name="Phone"
@@ -115,7 +115,7 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal, fetchBlog }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label for="exampleInputEmail" className="form-label">
+                        <label htmlFor="exampleInputEmail" className="form-label">
                             Email Address
                         </label>
                         <input
@@ -131,11 +131,11 @@ const UpdateBlog = ({ modalIsOpen, blogs, closeModal, fetchBlog }) => {
                         )}
                     </div>
                     <div className="form-group mb-3">
-                        <label for="exampleInputDescription" className="form-label">
+                        <label htmlFor="exampleInputDescription" className="form-label">
                             Blog Description
                         </label>
-                        <input
-                            type="text"
+                        <textarea
+                            rows="3"
                             defaultValue={blogs ? blogs.Description : ""}
                             ref={register({ required: true })}
                             name="Description"
