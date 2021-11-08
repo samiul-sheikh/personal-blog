@@ -1,34 +1,35 @@
 import React from 'react';
+import Modal from 'react-modal';
 import { useForm } from 'react-hook-form';
 
-const AddBlog = () => {
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+    },
+};
+Modal.setAppElement('#root');
+
+const UpdateBlog = ({ modalIsOpen, blogs, closeModal }) => {
+
     const { register, handleSubmit, errors } = useForm();
 
-    const onSubmit = data => {
-
-        const blogData = {
-            Title: data.Title,
-            Author_Name: data.Author_Name,
-            Phone: data.Phone,
-            Email: data.Email,
-            Description: data.Description,
-        };
-
-        const url = 'https://care-box-backend.herokuapp.com/api/v1/applicant_test/';
-        console.log(blogData);
-
-        fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(blogData)
-        })
-            .then(res => console.log(res))
-    };
+    const onSubmit = data => console.log(data);
 
     return (
-        <section className="container">
-            <div className="p-4 pr-5">
-                <h5 className="text-center">Add New Blog</h5>
+        <div>
+
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={customStyles}
+                contentLabel="Example Modal"
+            >
+                <button onClick={closeModal}>close</button>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-group mb-3">
                         <label for="exampleInputTitle" className="form-label">Blog Title</label>
@@ -59,9 +60,9 @@ const AddBlog = () => {
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </div>
                 </form>
-            </div>
-        </section>
+            </Modal>
+        </div>
     );
 };
 
-export default AddBlog;
+export default UpdateBlog;
