@@ -46,8 +46,8 @@ const Blogs = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {blogs.map((blog) => (
-                            <tr>
+                        {blogs.map(blog => (
+                            <tr key={blog.id}>
                                 <td>{blog.Title} </td>
                                 <td>{blog.Author_Name}</td>
                                 <td>{blog.Phone}</td>
@@ -56,11 +56,11 @@ const Blogs = () => {
                                 <td>
                                     <button onClick={openModal} className="btn btn-info">UPDATE</button>
                                 </td>
-                                <UpdateBlog modalIsOpen={modalIsOpen} blogs={blogs} closeModal={closeModal}></UpdateBlog>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                <UpdateBlog modalIsOpen={modalIsOpen} blogs={blogs} closeModal={closeModal}></UpdateBlog>
             </div>
         </div>
     );
